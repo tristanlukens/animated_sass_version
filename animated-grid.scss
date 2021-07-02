@@ -1,0 +1,44 @@
+$grid-areas: (a, b, c, d, e, f, g, h, i, j, k, l, 😁);
+$stagger-delay: 100ms;
+
+@import url(./base.css);
+
+.animated-grid {
+	height: 85vh;
+
+	display: grid;
+	gap: 1rem;
+
+	grid-template-areas: "a b c d" "l 😁 😁 e" "k 😁 😁 f" "j i h g";
+
+	grid-template-rows: repeat(4, 25%);
+	grid-template-columns: 240px auto auto 240px;
+}
+
+.card {
+	animation: cardEntrance 700ms ease-out;
+	animation-fill-mode: backwards;
+
+	background-color: orange;
+}
+
+@for $i from 1 to 14 {
+	.card:nth-child(#{$i}) {
+		grid-area: nth($list: $grid-areas, $n: $i);
+		animation-delay: calc(#{$i} * #{$stagger-delay});
+	}
+}
+
+@keyframes cardEntrance {
+	from {
+		opacity: 0;
+		transform: scale(0.3);
+		filter: hue-rotate(180deg);
+	}
+
+	to {
+		opacity: 1;
+		transform: scale(1);
+		filter: hue-rotate(0deg);
+	}
+}
